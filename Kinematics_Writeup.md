@@ -18,7 +18,7 @@
 
 [image1]: ./misc_images/Robot_Figure.jpeg
 [image2]: ./misc_images/Z-Axis.png
-[image3]: ./misc_images/misc2.png
+[image3]: ./misc_images/X-Axis.png
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/972/view) Points 
 
@@ -40,9 +40,48 @@ Image showing the KR210 joints and links.
 ![alt text][image2]
 Z-axis of the joint axis shown with blue lines.
 
-The base (0) and joint 1 have a common z-axis, while joints 2, 3 and 5 are parallel. Joints 4 and 6 are also common along with the gripper z-axis. Following the right hand rule, the X-axis are shown with the green lines.
+The base (0) and joint 1 have a common z-axis, while joints 2 and 3 3 are parallel. Joint 6 is also common along with the gripper (EE) z-axis. According to section 13 of the Forward and Inverse Kinematics lesson, collinlear lines in the Z axis mean alpha = 0 and a = 0. Parallel axis mean alpha is 0 and a is not 0. Intersecting Z axis will meant that alpha is not 0 and a = 0.
+
+Links | alpha(i-1) | a(i-1) | d(i-1) | theta(i) | Notes
+--- | --- | --- | --- | --- | ---
+0->1 | 0 | 0 | ? | ? | Colinear: alpha & a = 0
+1->2 | ? | ? | ? | ? | 
+2->3 | 0 | ? | ? | ? | Parallel: alpha = 0
+3->4 | ? | 0 | ? | ? | Intersect: a = 0
+4->5 | ? | 0 | ? | ? | Interset: a = 0
+5->6 | ? | 0 | ? | ? | Intersect: a = 0
+6->EE | 0 | 0 | ? | ? | Colinear: alpha & a = 0
+
+Following the right hand rule, the X-axis are shown with the green lines.
 
 ![alt text][image3]
+
+The video in KR210 Forward Kinematics 1, shows which a's and d's need to be solved for with the DH table and supply the remaining alpha values. It is assumed that the rules of calculating d are the same as a, but with the X axis. There is some confusion since the video indicates there is an a3 to solve for, but the Z4 and Z5 axis intersect. The video diagram is also missing distances between x4 and x5, x5 and x6. The kinematics lesson indicates that axis can be moved to reduce the number of values to solve for. Will try to solve for the diagram I created along with the example in KR210 Forward Kinematics 1. The plan will be to continue with the current diagram, then try to make x4,5 and 6 colinear ande test that solution if the current one doesn't work.
+
+Links | alpha(i-1) | a(i-1) | d(i-1) | theta(i) | Notes
+--- | --- | --- | --- | --- | ---
+0->1 | 0 | 0 | d1 | ? |  Parallel: d != 0
+1->2 | -90 | a1 | 0 | ? | Intersect: d = 0
+2->3 | 0 | a2 | 0 | ? | Colinear: d = 0 
+3->4 | -90 | 0 | d4 | ? | Parallel: d != 0
+4->5 | 90 | 0 | d5 | ? | Parallel: d != 0
+5->6 | -90 | 0 | d6 | ? | Parallel: d != 0
+6->EE | 0 | 0 | dEE | ? | Parallel: d != 0
+
+
+Finally, each of the joints are revolute, so the table would result in solving for each theta.
+
+Links | alpha(i-1) | a(i-1) | d(i-1) | theta(i) | Notes
+--- | --- | --- | --- | --- | ---
+0->1 | 0 | 0 | d1 | Th1 |  
+1->2 | -90 | a1 | 0 | Th2 | 
+2->3 | 0 | a2 | 0 | Th3 |  
+3->4 | -90 | 0 | d4 | Th4 | 
+4->5 | 90 | 0 | d5 | Th5 | 
+5->6 | -90 | 0 | d6 | Th6 | 
+6->EE | 0 | 0 | dEE | ThEE | 
+
+
 
 #### 2. Using the DH parameter table you derived earlier, create individual transformation matrices about each joint. In addition, also generate a generalized homogeneous transform between base_link and gripper_link using only end-effector(gripper) pose.
 
