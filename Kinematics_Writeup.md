@@ -125,7 +125,7 @@ sin(q2) * sin(-90) | cos(q2) * sin(-90) |  cos(-90) |  cos(-90) * 0
 Frame 1 -> 2 | Values calculated
 --- | ---
 cos(q2) | -sin(q2) | 0 | a1 
-0 | 0 | -1 | 0 
+0 | 0 | 1 | 0 
 -sin(q2) | -cos(q2) |  0 |  0
 0 | 0 | 0 | 1 
  
@@ -216,15 +216,12 @@ sin(qG) | cos(qG) | 0 | 0
 
 Frame 6 -> G simplifies into a standard rotation matrix about joint 6's Z-axis. It also adds in a translation along joint 6's Z-azis as well.
 
+The jupyter python file "Frame Transformation Matrices" was added in to verify the individual frames and to obtain the homogeneous transform from base to gripper. Lesson 11, section 17 was used to create this file and print the simplifications. Each matrix listed above was verified and the end effector was listed as 7 instead of G. The script printed out the following for te homogeneous transform from the base to the end effector:
 
-As specified in the KR210 Forward Kinematics 2 video, the transformation between the base link and the gripper link is a 180 degree rotation about the z axis and -90 degrees on the y axis.
-
-Frame 0 -> G | Transform Formula w/ DH Parameter Variables
---- | ---
-cos(q1) | -sin(q1) | 0 | a6 
-sin(q1) * cos(alpha0) | cos(q1) * cos(alpha0) | -sin(alpha0) | -sin(alpha0)) * d1 
-sin(q1) * sin(alpha0) | cos(q1) * sin(alpha0) |  cos(alpha0) |  cos(alpha0) * d1 
-0 | 0 | 0 | 1 
+sin(q1) * sin(q4) * cos(q5) * cos(q6 + q7) + sin(q1) * sin(q6 + q7) * cos(q4) - sin(q4) * sin(q6 + q7) * cos(q1) * cos(q2 + q3) - sin(q5) * sin(q2 + q3) * cos(q1) * cos(q6 + q7) + cos(q1) * cos(q4) * cos(q5) * cos(q2 + q3) * cos(q6 + q7) | -sin(q1) * sin(q4) * sin(q6 + q7) * cos(q5) + sin(q1) * cos(q4) * cos(q6 + q7) - sin(q4) * cos(q1) * cos(q2 + q3) * cos(q6 + q7) + sin(q5) * sin(q2 + q3) * sin(q6 + q7) * cos(q1) - sin(q6 + q7) * cos(q1) * cos(q4) * cos(q5) * cos(q2 + q3) | -(sin(q1) * sin(q4) + cos(q1) * cos(q4) * cos(q2 + q3)) * sin(q5) - sin(q2 + q3) * cos(q1) * cos(q5) | a1 * cos(q1) + a2 * cos(q1) * cos(q2) + a3 * cos(q1) * cos(q2 + q3) - d4 * sin(q2 + q3) * cos(q1) - d7 * ((sin(q1) * sin(q4) + cos(q1) * cos(q4) * cos(q2 + q3)) * sin(q5) + sin(q2 + q3) * cos(q1) * cos(q5))
+-sin(q1) * sin(q4) * sin(q6 + q7) * cos(q2 + q3) - sin(q1) * sin(q5) * sin(q2 + q3) * cos(q6 + q7) + sin(q1) * cos(q4) * cos(q5) * cos(q2 + q3) * cos(q6 + q7) - sin(q4) * cos(q1) * cos(q5) * cos(q6 + q7) - sin(q6 + q7) * cos(q1) * cos(q4) | -sin(q1) * sin(q4) * cos(q2 + q3) * cos(q6 + q7) + sin(q1) * sin(q5) * sin(q2 + q3) * sin(q6 + q7) - sin(q1) * sin(q6 + q7) * cos(q4) * cos(q5) * cos(q2 + q3) + sin(q4) * sin(q6 + q7) * cos(q1) * cos(q5) - cos(q1) * cos(q4) * cos(q6 + q7) | (-sin(q1) * cos(q4) * cos(q2 + q3) + sin(q4) * cos(q1)) * sin(q5) - sin(q1) * sin(q2 + q3) * cos(q5) | a1 * sin(q1) + a2 * sin(q1) * cos(q2) + a3 * sin(q1) * cos(q2 + q3) - d4 * sin(q1) * sin(q2 + q3) - d7 * (-(-sin(q1) * cos(q4) * cos(q2 + q3) + sin(q4) * cos(q1)) * sin(q5) + sin(q1) * sin(q2 + q3) * cos(q5))
+sin(q4) * sin(q2 + q3) * sin(q6 + q7) - sin(q5) * cos(q2 + q3) * cos(q6 + q7) - sin(q2 + q3) * cos(q4) * cos(q5) * cos(q6 + q7) | sin(q4) * sin(q2 + q3) * cos(q6 + q7) + sin(q5) * sin(q6 + q7) * cos(q2 + q3) + sin(q2 + q3) * sin(q6 + q7) * cos(q4) * cos(q5) | sin(q5) * sin(q2 + q3) * cos(q4) - cos(q5) * cos(q2 + q3) | -a2 * sin(q2) - a3 * sin(q2 + q3) + d1 - d4 * cos(q2 + q3) + d7 * (sin(q5) * sin(q2 + q3) * cos(q4) - cos(q5) * cos(q2 + q3)) 
+0 | 0 | 0 | 1
 
 
 #### 3. Decouple Inverse Kinematics problem into Inverse Position Kinematics and inverse Orientation Kinematics; doing so derive the equations to calculate all individual joint angles.
