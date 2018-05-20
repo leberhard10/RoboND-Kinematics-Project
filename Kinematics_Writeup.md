@@ -28,15 +28,15 @@ This file will cover the rubric criteria and how item was addressed. The default
 
 To determine the DH parameters, a diagram of the Kuka KR210 joints and links was created and the Z-axis of each joint was determined. 
 
-![arm_fig_1][https://github.com/leberhard10/RoboND-Kinematics-Project/tree/master/misc_images/X-Axis.png]
+![arm_fig_1](https://github.com/leberhard10/RoboND-Kinematics-Project/tree/master/misc_images/X-Axis.png)
 
 At first each axis was placed with each joint, but it was realized that it would result in an increase in number of calculations. Since the course mentioned that axis can be moved to decrease the number of DH parameters, a new diagram was created. If an axis didn't change between between joints, the x or z axis for those joints were made collinear to simplify the parameter table.
 
-![arm_fig_2][https://github.com/leberhard10/RoboND-Kinematics-Project/tree/master/misc_images/RobotArm.jpg]
+![arm_fig_2](https://github.com/leberhard10/RoboND-Kinematics-Project/tree/master/misc_images/RobotArm.jpg)
 
 After watching more videos and attempting to determine how the project kinematics 1 video assigned the axis locations. It was decided to continue with the diagram shown in the Project KR210 Forward Kinematics videos. The diagram below lists the axis along with the thetas for each joint.
 
-![arm_fig_3][https://github.com/leberhard10/RoboND-Kinematics-Project/tree/master/misc_images/RobotArm1.jpg]
+![arm_fig_3](https://github.com/leberhard10/RoboND-Kinematics-Project/tree/master/misc_images/RobotArm1.jpg)
 
 The base (0) and joint 1 z-axis are collinear, while joints 2 and 3 are parallel. Joint 6 is also coliniear with the gripper (EE) z-axis. According to section 13 of the Forward and Inverse Kinematics lesson, collinlear lines in the Z axis mean alpha = 0 and a = 0. Parallel axis mean alpha is 0 and a is not 0. Intersecting Z axis will meant that alpha is not 0 and a = 0. Alpha values provided by the KR210 Forward Kinematics 1 video.
 
@@ -64,7 +64,7 @@ Links | alpha(i-1) | a(i-1) | d(i-1) | theta(i) | Notes
 
 The a and d variables were added to the diagram as seen below.
 
-![arm_fig_4][https://github.com/leberhard10/RoboND-Kinematics-Project/tree/master/misc_images/RobotArm2.jpg]
+![arm_fig_4](ttps://github.com/leberhard10/RoboND-Kinematics-Project/tree/master/misc_images/RobotArm2.jpg)
 
 
 Finally, each of the joints are revolute, so the table would result in solving for each theta.
@@ -82,20 +82,14 @@ Links | alpha(i-1) | a(i-1) | d(i-1) | theta(i) | Notes
 
 
 #### 2. Using the DH parameter table you derived earlier, create individual transformation matrices about each joint. In addition, also generate a generalized homogeneous transform between base_link and gripper_link using only end-effector(gripper) pose.
-0->1 | 0 | 0 | L1 | qi
-1->2 | - pi/2 | L2 | 0 | -pi/2 + q2
 
-The alpha values were converted to radians following the example table.
+The example in Lesson 11, section 17 was used to determine the format of the transformation matrices. The Th in the DH parameter table was replaced with q to follow the code examples.
 
-Links | alpha(i-1) | a(i-1) | d(i-1) | theta(i)
---- | --- | --- | --- | ---
-0->1 | 0 | 0 | d1 | Th1 |  
-1->2 | - pi/2 | a1 | 0 | Th2 | 
-2->3 | 0 | a2 | 0 | Th3 | 
-3->4 | - pi/2 | a3 | d4 | Th4 |  
-4->5 | pi/2 | 0 | 0 | Th5 | 
-5->6 | - pi/2 | 0 | 0 | Th6 |  
-6->G | 0 | 0 | dG | ThG | 
+| cos(qi) | -sin(qi) | 0 | a(i-1) |
+| sin(qi) * cos(alpha(i-1) | cos(qi) * cos(alpha(i-1) | -sin(alpha(i-1)) | -sin(alpha(i-1)) * di |
+| sin(qi) * sin(alpha(i-1)) | cos(qi) * sin(alpha(i-1)) |  cos(alpha(i-1)) |  cos(alpha(i-1)) * di |
+| 0 | 0 | 0 | 1 |
+
 
 As specified in the KR210 Forward Kinematics 2 video, the transformation between the base link and the gripper link is a 180 degree rotation about the z axis and -90 degrees on the y axis.
 
