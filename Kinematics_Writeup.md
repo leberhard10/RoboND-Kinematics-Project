@@ -98,15 +98,15 @@ sin(-90) = -1
 
  
 
-Frame 0 -> 1 | Transform Formula w/ DH Parameter Variables
---- | ---
+Frame 0 -> 1  Transform Formula w/ DH Parameter Variables
+
 cos(q1) | -sin(q1) | 0 | 0 
 sin(q1) * cos(0) | cos(q1) * cos(0) | -sin(0) | -sin(0) * d1 
 sin(q1) * sin(0) | cos(q1) * sin(0) |  cos(0) |  cos(0) * d1 
 0 | 0 | 0 | 1 
 
-Frame 0 -> 1 | Values calculated
---- | ---
+Frame 0 -> 1  Values calculated
+
 cos(q1) | -sin(q1) | 0 | 0 
 sin(q1) | cos(q1) | 0 | 0 
 0 | 0 |  1 |  d1 
