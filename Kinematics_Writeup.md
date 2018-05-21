@@ -85,6 +85,7 @@ Links | alpha(i-1) | a(i-1) | d(i) | theta(i) | Notes
 
 Rotation The Th in the DH parameter table was replaced with q to follow the code examples.
 
+Rn1 | Rn2 | Rn3 | T
 --- | --- | --- | --- 
  cos(qi) | -sin(qi) | 0 | a(i-1) 
  sin(qi) * cos(alpha(i-1) | cos(qi) * cos(alpha(i-1) | -sin(alpha(i-1)) | -sin(alpha(i-1)) * di 
