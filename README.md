@@ -1,4 +1,8 @@
-[![Udacity - Robotics NanoDegree Program](https://s3-us-west-1.amazonaws.com/udacity-robotics/Extra+Images/RoboND_flag.png)](https://www.udacity.com/robotics)
+## Disclaimer
+This project is a homework assignment submitted by Laura Eberhard and forked from the Udacity RoboND-Rover repository. (https://github.com/udacity/RoboND-Kinematics-Project). As part of the Udacity Honor code (https://www.udacity.com/legal/community-guidelines), this project cannot be submitted as an original work by other students.
+
+---
+
 # Robotic arm - Pick & Place project
 
 Make sure you are using robo-nd VM or have Ubuntu+ROS installed locally.
