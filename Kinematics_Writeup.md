@@ -312,7 +312,28 @@ Section 15 indicates tgat 4, 5 and 6 can be found by taking the inverse of 0 thr
 
 #### 1. Fill in the `IK_server.py` file with properly commented python code for calculating Inverse Kinematics based on previously performed Kinematic Analysis. Your code must guide the robot to successfully complete 8/10 pick and place cycles. Briefly discuss the code you implemented and your results. 
 
-The forward kinematics code from the verification jupyter file "Frame Transformation Matrices", was copied over to IK_Server.py. This was part of following the instructions from setp 12 of the project. 
+The forward kinematics code from the verification jupyter file "Frame Transformation Matrices", was copied over to IK_Server.py. This was part of following the instructions from step 12 of the project. 
+
+There were challenges with the inverse kinematics calculations, so the walkthrough was used to help confirm the calculations along with a starting point for the code. After debugging, the error output was:
+
+Wrist error for x position is: 0.05019708
+Wrist error for y position is: 0.14993072
+Wrist error for z position is: 0.43119765
+Overall wrist offset is: 0.45927158 units
+
+Theta 1 error is: 0.06239953
+Theta 2 error is: 1.69407758
+Theta 3 error is: 0.24293440
+Theta 4 error is: 0.61891844
+Theta 5 error is: 0.39334545
+Theta 6 error is: 0.15850916
+
+End effector error for x position is: 0.12241305
+End effector error for y position is: 0.03599479
+End effector error for z position is: 0.30304414
+Overall end effector offset is: 0.32881048 units
+
+
 
 
 
