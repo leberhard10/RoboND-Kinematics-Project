@@ -64,7 +64,7 @@ Links | alpha(i-1) | a(i-1) | d(i) | theta(i) | Notes
 
 The a and d variables were added to the diagram as seen below.
 
-![arm_fig_4](ttps://github.com/leberhard10/RoboND-Kinematics-Project/tree/master/misc_images/RobotArm2.PNG)
+![arm_fig_4](https://github.com/leberhard10/RoboND-Kinematics-Project/tree/master/misc_images/RobotArm2.PNG)
 
 
 Finally, each of the joints are revolute, so the table would result in solving for each theta.
@@ -193,8 +193,10 @@ sin(q5) * cos(90) | cos(q5) * cos(90) | -sin(90) | -sin(90) * 0
 sin(q5) * sin(90) | cos(q5) * sin(90) |  cos(90) |  cos(90) * 0 
 0 | 0 | 0 | 1 
  
-Frame 4 -> 5 | Values calculated
---- | ---
+Frame 4 -> 5  Values calculated
+
+Rn1 | Rn2 | Rn3 | T
+--- | --- | --- | --- 
 cos(q5) | -sin(q5) | 0 | 0 
 0 | 0 | -1 | 0 
 sin(q5) | cos(q5) |  0 |  0 
@@ -244,28 +246,73 @@ sin(qG) | cos(qG) | 0 | 0
 
 Frame 6 -> G simplifies into a standard rotation matrix about joint 6's Z-axis. It also adds in a translation along joint 6's Z-azis as well.
 
-The jupyter python file "Frame Transformation Matrices" was added in to verify the individual frames and to obtain the homogeneous transform from base to gripper. Lesson 11, section 17 was used to create this file and print the simplifications. Each matrix listed above was verified and the end effector was listed as 7 instead of G. The script printed out the following for te homogeneous transform from the base to the end effector:
+The jupyter python file "Frame Transformation Matrices" was added in to verify the individual frames. Lesson 11, section 17 was used to create this file and print the simplifications. Each matrix listed above was verified and the end effector was listed as 7 instead of G.
 
-Rn1 | Rn2 | Rn3 | T
---- | --- | --- | --- 
-sin(q1) * sin(q4) * cos(q5) * cos(q6 + q7) + sin(q1) * sin(q6 + q7) * cos(q4) - sin(q4) * sin(q6 + q7) * cos(q1) * cos(q2 + q3) - sin(q5) * sin(q2 + q3) * cos(q1) * cos(q6 + q7) + cos(q1) * cos(q4) * cos(q5) * cos(q2 + q3) * cos(q6 + q7) | -sin(q1) * sin(q4) * sin(q6 + q7) * cos(q5) + sin(q1) * cos(q4) * cos(q6 + q7) - sin(q4) * cos(q1) * cos(q2 + q3) * cos(q6 + q7) + sin(q5) * sin(q2 + q3) * sin(q6 + q7) * cos(q1) - sin(q6 + q7) * cos(q1) * cos(q4) * cos(q5) * cos(q2 + q3) | -(sin(q1) * sin(q4) + cos(q1) * cos(q4) * cos(q2 + q3)) * sin(q5) - sin(q2 + q3) * cos(q1) * cos(q5) | a1 * cos(q1) + a2 * cos(q1) * cos(q2) + a3 * cos(q1) * cos(q2 + q3) - d4 * sin(q2 + q3) * cos(q1) - d7 * ((sin(q1) * sin(q4) + cos(q1) * cos(q4) * cos(q2 + q3)) * sin(q5) + sin(q2 + q3) * cos(q1) * cos(q5))
--sin(q1) * sin(q4) * sin(q6 + q7) * cos(q2 + q3) - sin(q1) * sin(q5) * sin(q2 + q3) * cos(q6 + q7) + sin(q1) * cos(q4) * cos(q5) * cos(q2 + q3) * cos(q6 + q7) - sin(q4) * cos(q1) * cos(q5) * cos(q6 + q7) - sin(q6 + q7) * cos(q1) * cos(q4) | -sin(q1) * sin(q4) * cos(q2 + q3) * cos(q6 + q7) + sin(q1) * sin(q5) * sin(q2 + q3) * sin(q6 + q7) - sin(q1) * sin(q6 + q7) * cos(q4) * cos(q5) * cos(q2 + q3) + sin(q4) * sin(q6 + q7) * cos(q1) * cos(q5) - cos(q1) * cos(q4) * cos(q6 + q7) | (-sin(q1) * cos(q4) * cos(q2 + q3) + sin(q4) * cos(q1)) * sin(q5) - sin(q1) * sin(q2 + q3) * cos(q5) | a1 * sin(q1) + a2 * sin(q1) * cos(q2) + a3 * sin(q1) * cos(q2 + q3) - d4 * sin(q1) * sin(q2 + q3) - d7 * (-(-sin(q1) * cos(q4) * cos(q2 + q3) + sin(q4) * cos(q1)) * sin(q5) + sin(q1) * sin(q2 + q3) * cos(q5))
-sin(q4) * sin(q2 + q3) * sin(q6 + q7) - sin(q5) * cos(q2 + q3) * cos(q6 + q7) - sin(q2 + q3) * cos(q4) * cos(q5) * cos(q6 + q7) | sin(q4) * sin(q2 + q3) * cos(q6 + q7) + sin(q5) * sin(q6 + q7) * cos(q2 + q3) + sin(q2 + q3) * sin(q6 + q7) * cos(q4) * cos(q5) | sin(q5) * sin(q2 + q3) * cos(q4) - cos(q5) * cos(q2 + q3) | -a2 * sin(q2) - a3 * sin(q2 + q3) + d1 - d4 * cos(q2 + q3) + d7 * (sin(q5) * sin(q2 + q3) * cos(q4) - cos(q5) * cos(q2 + q3)) 
-0 | 0 | 0 | 1
+The end of step 10 in the project reported that the rotatiob between the base and the gripper is a 180 degree rotation about the z axis and a -90 degree rotation about the y axis. this can easily be shown in two rotation matrixes:
+
+R_z = \matrix{ cos(180) & -sin(180) & 0\cr
+               sin(180) & cos(180) & 0\cr
+                       0 & 0 & 1}
+
+R_y = \matrix{ cos(-90) & 0 & sin(-90)\cr
+               0 & 1 & 0\cr
+              -sin(-90) & 0 & cos(-90)}
 
 
 #### 3. Decouple Inverse Kinematics problem into Inverse Position Kinematics and inverse Orientation Kinematics; doing so derive the equations to calculate all individual joint angles.
 
-And here's where you can draw out and show your math for the derivation of your theta angles. 
+Following section 15 of the project, started with joint 5 solving for the Inverse Position. Joints 4, 5 and 6 meet the requirements for the "closed-form" solution.
 
+Homogeneous transform: 
+\matrix{l_x & m_x & n_x & p_x\cr l_y & m_y & n_y & p_y\cr l_z & m_z & n_z & p_z\cr 0 & 0 & 0 & 1\cr}
+
+w_x = p_x - (d_6 + l) * n_x \\
+w_y = p_y - (d_6 + l) * n_y \\
+w_z = p_z - (d_6 + l) * n_z \\
+
+Px, Py, Pz are end effector position
+d6 from the DH table
+l is end effector length
+nx, ny, nz are the wrist center position
+
+The remaining joints are diagrammed as follows based on Lesson 11, section 19.
+
+![arm_fig_5](https://github.com/leberhard10/RoboND-Kinematics-Project/tree/master/misc_images/l21-l-inverse-kinematics-01.PNG)
+
+Following the steps in lesson 11 section 19, the end effector is projected onto the ground plane and the solution for Joint 1 theta is 
+
+\theta_1 = \atan2(y_c, x_C)
+
+Joints 2 and 3 are calculated based on the supplied image from step 15 of the project. 
+
+![arm_fig_5](https://github.com/leberhard10/RoboND-Kinematics-Project/tree/master/misc_images/InverseJoint2_3.PNG)
+
+The diagram indicates \theta_2 can be found with 
+
+A = d_4 from DH Parameters
+B = \sqrt{WC_y^2 + WC_x^2}
+C = a_2 from DH parameters
+
+a = acos(\frac{B^2 + C^2 - A^2}{2 * B * C})
+
+WCa = acos(\frac{WC_y^2 + B^2 - WC_x^2}{2 * WC_y * B}) 
+
+\theta_2 = 90 - a - WCa
+
+From the diagram in step 15, it seems like \theta_3 can be found with this:
+
+b = acos(\frac{A^2 + C^2 - B^2}{2 * A * C})
+
+\theta_3 = 90 - b
+
+Section 15 indicates tgat 4, 5 and 6 can be found by taking the inverse of 0 through 3 and multiplying it with the end effector rotation matrix.
 
 
 ### Project Implementation
 
 #### 1. Fill in the `IK_server.py` file with properly commented python code for calculating Inverse Kinematics based on previously performed Kinematic Analysis. Your code must guide the robot to successfully complete 8/10 pick and place cycles. Briefly discuss the code you implemented and your results. 
 
-
-Here I'll talk about the code, what techniques I used, what worked and why, where the implementation might fail and how I might improve it if I were going to pursue this project further.  
+The forward kinematics code from the verification jupyter file "Frame Transformation Matrices", was copied over to IK_Server.py. This was part of following the instructions from setp 12 of the project. 
 
 
 
