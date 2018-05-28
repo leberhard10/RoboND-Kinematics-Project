@@ -250,11 +250,11 @@ The jupyter python file "Frame Transformation Matrices" was added in to verify t
 
 The end of step 10 in the project reported that the rotatiob between the base and the gripper is a 180 degree rotation about the z axis and a -90 degree rotation about the y axis. this can easily be shown in two rotation matrixes:
 
-R_z = \matrix{ cos(180) & -sin(180) & 0\cr
+%%R_z = \matrix{ cos(180) & -sin(180) & 0\cr
                sin(180) & cos(180) & 0\cr
                        0 & 0 & 1}
 
-R_y = \matrix{ cos(-90) & 0 & sin(-90)\cr
+%%R_y = \matrix{ cos(-90) & 0 & sin(-90)\cr
                0 & 1 & 0\cr
               -sin(-90) & 0 & cos(-90)}
 
@@ -264,11 +264,11 @@ R_y = \matrix{ cos(-90) & 0 & sin(-90)\cr
 Following section 15 of the project, started with joint 5 solving for the Inverse Position. Joints 4, 5 and 6 meet the requirements for the "closed-form" solution.
 
 Homogeneous transform: 
-\matrix{l_x & m_x & n_x & p_x\cr l_y & m_y & n_y & p_y\cr l_z & m_z & n_z & p_z\cr 0 & 0 & 0 & 1\cr}
+%%\matrix{l_x & m_x & n_x & p_x\cr l_y & m_y & n_y & p_y\cr l_z & m_z & n_z & p_z\cr 0 & 0 & 0 & 1\cr}
 
-w_x = p_x - (d_6 + l) * n_x \\
-w_y = p_y - (d_6 + l) * n_y \\
-w_z = p_z - (d_6 + l) * n_z \\
+%%w_x = p_x - (d_6 + l) * n_x \\
+%%w_y = p_y - (d_6 + l) * n_y \\
+%%w_z = p_z - (d_6 + l) * n_z \\
 
 Px, Py, Pz are end effector position
 d6 from the DH table
@@ -281,7 +281,7 @@ The remaining joints are diagrammed as follows based on Lesson 11, section 19.
 
 Following the steps in lesson 11 section 19, the end effector is projected onto the ground plane and the solution for Joint 1 theta is 
 
-\theta_1 = \atan2(y_c, x_C)
+%%\theta_1 = \atan2(y_c, x_C)
 
 Joints 2 and 3 are calculated based on the supplied image from step 15 of the project. 
 
@@ -289,21 +289,21 @@ Joints 2 and 3 are calculated based on the supplied image from step 15 of the pr
 
 The diagram indicates \theta_2 can be found with 
 
-A = d_4 from DH Parameters
-B = \sqrt{WC_y^2 + WC_x^2}
-C = a_2 from DH parameters
+%%A = d_4 from DH Parameters
+%%B = \sqrt{WC_y^2 + WC_x^2}
+%%C = a_2 from DH parameters
 
-a = acos(\frac{B^2 + C^2 - A^2}{2 * B * C})
+%%a = acos(\frac{B^2 + C^2 - A^2}{2 * B * C})
 
-WCa = acos(\frac{WC_y^2 + B^2 - WC_x^2}{2 * WC_y * B}) 
+%%WCa = acos(\frac{WC_y^2 + B^2 - WC_x^2}{2 * WC_y * B}) 
 
-\theta_2 = 90 - a - WCa
+%%\theta_2 = 90 - a - WCa
 
 From the diagram in step 15, it seems like \theta_3 can be found with this:
 
-b = acos(\frac{A^2 + C^2 - B^2}{2 * A * C})
+%%b = acos(\frac{A^2 + C^2 - B^2}{2 * A * C})
 
-\theta_3 = 90 - b
+%%\theta_3 = 90 - b
 
 Section 15 indicates tgat 4, 5 and 6 can be found by taking the inverse of 0 through 3 and multiplying it with the end effector rotation matrix.
 
