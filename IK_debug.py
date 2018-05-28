@@ -62,6 +62,11 @@ def test_code(test_case):
     ########################################################################################
     ## 
 
+    print ("\nPI is %04.4f " % pi)
+    var = pi/2
+    print ("\nPI is %04.4f " % var)
+    var = var / 2.0
+    print ("\nPI is %04.4f " % var)
     print ("\nStart Time is %04.4f seconds" % start_time)
     ## Insert IK code here!
     # Create symbols for joint variables
@@ -96,28 +101,7 @@ def test_code(test_case):
     T6_EE = TF_Matrix(alpha6, a6, d7, q7).subs(s)
     
     T0_EE = T0_1 * T1_2 * T2_3 * T3_4 * T4_5 * T5_6 * T6_EE
-    
-            
-    # Extract rotation matrices from the transformation matrices
-    r, p, y = symbols('r p y')
-    Rot_x = Matrix([[ 1,              0,        0],
-                  [ 0,        cos(r), -sin(r)],
-                  [ 0,        sin(r),  cos(r)]])
 
-    Rot_y = Matrix([[ cos(p),        0,  sin(p)],
-                  [       0,        1,        0],
-                  [-sin(p),        0,  cos(p)]])
-
-    Rot_z = Matrix([[ cos(y), -sin(y),        0],
-                  [ sin(y),  cos(y),        0],
-                  [ 0,              0,        1]])
-    
-    Rot_EE = Rot_x * Rot_y * Rot_z
-    Rot_error = Rot_z.subs(y, radians(180)) * Rot_y.subs(p, radians(-90))
-    
-    Rot_EE = Rot_EE * Rot_error
-    
-    
     print ("\nRun time to generate matices is %04.4f seconds" % (time()-start_time))
 
     # Extract end-effector position and orientation from request
@@ -144,15 +128,22 @@ def test_code(test_case):
     Rot_z = Matrix([[ cos(y), -sin(y),        0],
                   [ sin(y),  cos(y),        0],
                   [ 0,              0,        1]])
+                  
+    Rot_EE = Rot_x * Rot_y * Rot_z
+    Rot_error = Rot_z.subs(y, radians(180)) * Rot_y.subs(p, radians(-90))
+    
+    Rot_EE = Rot_EE * Rot_error
     
     # Compensate for rotation discrepancy between DH parameters and Gazebo
     Rot_EE = Rot_EE.subs({'r': roll, 'p':pitch, 'y':yaw})
     
-    EE = Matrix([[px], [py], [px]])
+    EE = Matrix([[px], [py], [pz]])
     WC = EE -  0.303 * Rot_EE[:,2]     
                   
     # Calculate joint angles using Geometric IK method
-    theta1 = atan2(WC[1], WC[0])    
+    theta1 = atan2(WC[1], WC[0])       
+    print ("\nTheta1 is ", theta1) 
+    print ("\nTheta1 is %04.4f " % theta1) 
     
     A = 1.501  #d40
     B = sqrt(pow((sqrt(WC[0]*WC[0] + WC[1]*WC[1]) - 0.35), 2) + pow(WC[0]-0.75, 2))
@@ -163,9 +154,11 @@ def test_code(test_case):
 
     WCa = atan2(WC[2] - 0.75, sqrt(WC[0] * WC[0] + WC[1] * WC[1]) - 0.35)
 
-    theta2 = pi/2 - a - WCa    
+    theta2 = pi/2 - a - WCa  
+    print ("\nTheta2 is ", theta2)   
 
-    theta3 = pi/2 - (b+0.036)
+    theta3 = pi/2 - (b)
+    print ("\nTheta3 is %04.4f " % theta3) 
     
     R0_3 = T0_1[0:3, 0:3] * T1_2[0:3, 0:3] * T2_3[0:3, 0:3]
     R0_3 = R0_3.evalf(subs={q1: theta1, q2: theta2, q3: theta3})
@@ -173,9 +166,12 @@ def test_code(test_case):
     
     R3_6 = R0_3.inv("LU") * Rot_EE
     
-    theta4 = atan2(R3_6[2,2], -R3_6[0,2])    
+    theta4 = atan2(R3_6[2,2], -R3_6[0,2]) 
+    print ("\nTheta4 is %04.4f " % theta4)    
     theta5 = atan2(sqrt(R3_6[0,2]*R3_6[0,2] + R3_6[2,2]*R3_6[2,2]),R3_6[1,2])
+    print ("\nTheta5 is %04.4f " % theta5) 
     theta6 = atan2(-R3_6[1,1], R3_6[1,0])    
+    print ("\nTheta6 is %04.4f " % theta6) 
     
     print ("\nTotal run time to thetas is %04.4f seconds" % (time()-start_time))
 
@@ -225,10 +221,6 @@ def test_code(test_case):
     print ("Theta 4 error is: %04.8f" % t_4_e)
     print ("Theta 5 error is: %04.8f" % t_5_e)
     print ("Theta 6 error is: %04.8f" % t_6_e)
-    print ("\n**These theta errors may not be a correct representation of your code, due to the fact \
-           \nthat the arm can have muliple positions. It is best to add your forward kinmeatics to \
-           \nconfirm whether your code is working or not**")
-    print (" ")
 
     # Find FK EE error
     if not(sum(your_ee)==3):
@@ -246,6 +238,6 @@ def test_code(test_case):
 
 if __name__ == "__main__":
     # Change test case number for different scenarios
-    test_case_number = 1
+    test_case_number = 3
 
     test_code(test_cases[test_case_number])
