@@ -252,11 +252,11 @@ The end of step 10 in the project reported that the rotatiob between the base an
 
 %%R_z = \matrix{ cos(180) & -sin(180) & 0\cr
                sin(180) & cos(180) & 0\cr
-                       0 & 0 & 1}
+                       0 & 0 & 1}%%
 
 %%R_y = \matrix{ cos(-90) & 0 & sin(-90)\cr
                0 & 1 & 0\cr
-              -sin(-90) & 0 & cos(-90)}
+              -sin(-90) & 0 & cos(-90)}%%
 
 
 #### 3. Decouple Inverse Kinematics problem into Inverse Position Kinematics and inverse Orientation Kinematics; doing so derive the equations to calculate all individual joint angles.
