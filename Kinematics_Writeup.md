@@ -333,7 +333,38 @@ End effector error for y position is: 0.03599479
 End effector error for z position is: 0.30304414
 Overall end effector offset is: 0.32881048 units
 
+On the first try, the arm did not grab the can. The arm still will not grab cans after updating the code to match the walkthrough. Errors  
 
+Wrist error for x position is: 0.00000046
+Wrist error for y position is: 0.12355227
+Wrist error for z position is: 0.43697561
+Overall wrist offset is: 0.45410664 units
+
+Theta 1 error is: 0.04093002
+Theta 2 error is: 0.02425885
+Theta 3 error is: 0.21914260
+Theta 4 error is: 0.66601961
+Theta 5 error is: 0.37499318
+Theta 6 error is: 0.29212958
+
+End effector error for x position is: 0.02094135
+End effector error for y position is: 0.01731642
+End effector error for z position is: 0.06358249
+Overall end effector offset is: 0.06914572 units 
+
+It was noticed that samples 2 and 3 resulted in a 2, 3 error offset. Eventually the typo was found and the error offsets were below 1.0 for the sample datasets. It appears the calculations are having trouble with the bottom left shelf. After another pass with the walkthrough, additional typos were found.
+
+When clicking continue, the arm was still not obtaining 8 out of 10 cans. Debugging statements were added to report the offset error and next was used to determine if the timing mentioned in the FAQ was the problem. The error offsets appeared to be within 0.5 on average and helped show that the code was actually calculating. It appeard that clicking next in the middle of the arm movement could cause cans to be dropped.
+
+
+![arm_pic](https://github.com/leberhard10/RoboND-Kinematics-Project/tree/master/misc_images/Run_1.PNG)
+
+8 out of 10 cans were picked up using the next button and the debugging statements. Some rotation matrix optimizations were removed in case they affected the results as well. Clicking continue instead of the Next button results in the software hanging up or the can is left on the shelf. The suspicion is that the FAQ time fix is not working on this virtual machine. The time is returned to 5 seconds, but the code still hangs on occassion when there are several lists of end effectors lists longer than 40. It is suspected that this is a limitation of the resources available to the virtual machine since it becomes more frequent until the VM is restarted. After re-starting the VM and a successful 8 out of 10 with the continue button, it was realized that this only happens when the computer is put into sleep overnight between runs.
+
+![arm_pic](https://github.com/leberhard10/RoboND-Kinematics-Project/tree/master/misc_images/Passing_Run.PNG)
+
+
+Improvements could be made to the joint calculations of joints 4, 5 and 6 since the gripper appears to rotate excessivly. Optimizations should be made so the arm movements do not become less efficient with each click of the continue button. 
 
 
 
