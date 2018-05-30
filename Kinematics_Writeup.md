@@ -28,15 +28,15 @@ This file will cover the rubric criteria and how item was addressed. The default
 
 To determine the DH parameters, a diagram of the Kuka KR210 joints and links was created and the Z-axis of each joint was determined. 
 
-![arm_fig_1](https://github.com/leberhard10/RoboND-Kinematics-Project/blob/master/misc_images/X-Axis.PNG)
+![arm_fig_1](./misc_images/X-Axis.PNG)
 
 At first each axis was placed with each joint, but it was realized that it would result in an increase in number of calculations. Since the course mentioned that axis can be moved to decrease the number of DH parameters, a new diagram was created. If an axis didn't change between between joints, the x or z axis for those joints were made collinear to simplify the parameter table.
 
-![arm_fig_2](https://github.com/leberhard10/RoboND-Kinematics-Project/blob/master/misc_images/RobotArm.PNG)
+![arm_fig_2](./misc_images/RobotArm.PNG)
 
 After watching more videos and attempting to determine how the project kinematics 1 video assigned the axis locations. It was decided to continue with the diagram shown in the Project KR210 Forward Kinematics videos. The diagram below lists the axis along with the thetas for each joint.
 
-![arm_fig_3](https://github.com/leberhard10/RoboND-Kinematics-Project/blob/master/misc_images/RobotArm1.PNG)
+![arm_fig_3](./misc_images/RobotArm1.PNG)
 
 The base (0) and joint 1 z-axis are collinear, while joints 2 and 3 are parallel. Joint 6 is also coliniear with the gripper (EE) z-axis. According to section 13 of the Forward and Inverse Kinematics lesson, collinlear lines in the Z axis mean alpha = 0 and a = 0. Parallel axis mean alpha is 0 and a is not 0. Intersecting Z axis will meant that alpha is not 0 and a = 0. Alpha values provided by the KR210 Forward Kinematics 1 video.
 
@@ -64,7 +64,7 @@ Links | alpha(i-1) | a(i-1) | d(i) | theta(i) | Notes
 
 The a and d variables were added to the diagram as seen below.
 
-![arm_fig_4](https://github.com/leberhard10/RoboND-Kinematics-Project/blob/master/misc_images/RobotArm2.PNG)
+![arm_fig_4](./misc_images/RobotArm2.PNG)
 
 
 Finally, each of the joints are revolute, so the table would result in solving for each theta.
@@ -277,7 +277,7 @@ nx, ny, nz are the wrist center position
 
 The remaining joints are diagrammed as follows based on Lesson 11, section 19.
 
-![arm_fig_5](https://github.com/leberhard10/RoboND-Kinematics-Project/blob/master/misc_images/l21-l-inverse-kinematics-01.PNG)
+![arm_fig_5](./misc_images/l21-l-inverse-kinematics-01.PNG)
 
 Following the steps in lesson 11 section 19, the end effector is projected onto the ground plane and the solution for Joint 1 theta is 
 
@@ -285,7 +285,7 @@ $$\theta_1 = \atan2(y_c, x_C)$$
 
 Joints 2 and 3 are calculated based on the supplied image from step 15 of the project. 
 
-![arm_fig_5](https://github.com/leberhard10/RoboND-Kinematics-Project/blob/master/misc_images/InverseJoint2_3.PNG)
+![arm_fig_5](./misc_images/InverseJoint2_3.PNG)
 
 The diagram indicates \theta_2 can be found with 
 
@@ -357,11 +357,11 @@ It was noticed that samples 2 and 3 resulted in a 2, 3 error offset. Eventually 
 When clicking continue, the arm was still not obtaining 8 out of 10 cans. Debugging statements were added to report the offset error and next was used to determine if the timing mentioned in the FAQ was the problem. The error offsets appeared to be within 0.5 on average and helped show that the code was actually calculating. It appeard that clicking next in the middle of the arm movement could cause cans to be dropped.
 
 
-![arm_pic](https://github.com/leberhard10/RoboND-Kinematics-Project/blob/master/misc_images/Run_1.PNG)
+![arm_pic](./misc_images/Run_1.PNG)
 
 8 out of 10 cans were picked up using the next button and the debugging statements. Some rotation matrix optimizations were removed in case they affected the results as well. Clicking continue instead of the Next button results in the software hanging up or the can is left on the shelf. The suspicion is that the FAQ time fix is not working on this virtual machine. The time is returned to 5 seconds, but the code still hangs on occassion when there are several lists of end effectors lists longer than 40. It is suspected that this is a limitation of the resources available to the virtual machine since it becomes more frequent until the VM is restarted. After re-starting the VM and a successful 8 out of 10 with the continue button, it was realized that this only happens when the computer is put into sleep overnight between runs.
 
-![arm_pic](https://github.com/leberhard10/RoboND-Kinematics-Project/blob/master/misc_images/Passing_Run.PNG)
+![arm_pic](./misc_images/Passing_Run.PNG)
 
 
 Improvements could be made to the joint calculations of joints 4, 5 and 6 since the gripper appears to rotate excessivly. Optimizations should be made so the arm movements do not become less efficient with each click of the continue button. 
