@@ -67,7 +67,7 @@ The a and d variables were added to the diagram as seen below.
 ![arm_fig_4](./misc_images/RobotArm2.PNG)
 
 
-Finally, each of the joints are revolute, so the table would result in solving for each theta.
+Each of the joints are revolute, so the table would result in solving for each theta.
 
 Links | alpha(i-1) | a(i-1) | d(i) | theta(i) | Notes
 --- | --- | --- | --- | --- | ---
@@ -79,7 +79,16 @@ Links | alpha(i-1) | a(i-1) | d(i) | theta(i) | Notes
 5->6 | -90 | 0 | 0 | Th6 |  
 6->G | 0 | 0 | dG | ThG | 
 
-
+Finally, the parameters are added in for a complete DH parameter table.
+Links | alpha(i-1) | a(i-1) | d(i) | theta(i) | Notes
+--- | --- | --- | --- | --- | ---
+0->1 | 0 | 0 | 0.75 | Th1 |  
+1->2 | -90 | 0.35 | 0 | -90 + Th2 | 
+2->3 | 0 | 1.25 | 0 | Th3 | 
+3->4 | -90 | -0.054 | 1.5 | Th4 |  
+4->5 | 90 | 0 | 0 | Th5 | 
+5->6 | -90 | 0 | 0 | Th6 |  
+6->G | 0 | 0 | 0.303 | 0 | 
 
 #### 2. Using the DH parameter table you derived earlier, create individual transformation matrices about each joint. In addition, also generate a generalized homogeneous transform between base_link and gripper_link using only end-effector(gripper) pose.
 
