@@ -270,7 +270,20 @@ $$R_y = \matrix{ cos(-90) & 0 & sin(-90)\cr
 
 #### 3. Decouple Inverse Kinematics problem into Inverse Position Kinematics and inverse Orientation Kinematics; doing so derive the equations to calculate all individual joint angles.
 
-Following section 15 of the project, started with joint 5 solving for the Inverse Position. Joints 4, 5 and 6 meet the requirements for the "closed-form" solution.
+As clarified by the reviewer, the next step can be found in Lesson 11, step 8. This section covers how to determine an angle when the values of a rotation matrix are known.  The following equations are from the lesson:
+
+![lesson_1](./misc_images/EulerAnglesLesson_1.PNG)
+![lesson_2](./misc_images/EulerAnglesLesson_2.PNG)
+![lesson_3](./misc_images/EulerAnglesLesson_3.PNG)
+![lesson_4](./misc_images/EulerAnglesLesson_4.PNG)
+
+In trigonometry, $x = cos(\theta)$ and $y = sin(\theta)$
+
+The image from Lesson 15 was used as a reference for creating the diagrams.
+
+![theta_calc_1](./misc_images/l21-l-inverse-kinematics-01.PNG)
+
+The follwing step 15 of the project, covers how the wrist center is found.
 
 Homogeneous transform: 
 $$\matrix{l_x & m_x & n_x & p_x\cr l_y & m_y & n_y & p_y\cr l_z & m_z & n_z & p_z\cr 0 & 0 & 0 & 1\cr}$$
@@ -284,38 +297,61 @@ d6 from the DH table
 l is end effector length
 nx, ny, nz are the wrist center position
 
-The remaining joints are diagrammed as follows based on Lesson 11, section 19.
 
-![arm_fig_5](./misc_images/l21-l-inverse-kinematics-01.PNG)
+Following the steps in Leson 11, section 8 and a diagram based on Lesson 11, section 19, the wrist center is projected onto the ground plane and the solution for Joint 1 theta is the equation to solve for $\alpha% (Rotation about the Z-Axis)
 
-Following the steps in lesson 11 section 19, the end effector is projected onto the ground plane and the solution for Joint 1 theta is 
+$$\theta_1 = \atan2(y_WC, x_WC)$$
 
-$$\theta_1 = \atan2(y_c, x_C)$$
+![theta_calc_2](./misc_images/Theta1.PNG)
 
-Joints 2 and 3 are calculated based on the supplied image from step 15 of the project. 
 
-![arm_fig_5](./misc_images/InverseJoint2_3.PNG)
+For Theta 2, the diagram from section 15 of the project was used to create the diagrams.
 
-The diagram indicates \theta_2 can be found with 
+![theta_calc_3](./misc_images/Theta2_3.PNG)
 
-$$A = d_4 from DH Parameters$$
+$$A = 1.5(d_4 from DH Parameters)$$
 $$B = \sqrt{WC_y^2 + WC_x^2}$$
-$$C = a_2 from DH parameters$$
+$$C = 1.27(a_2 from DH parameters)$$
 
-$$a = acos(\frac{B^2 + C^2 - A^2}{2 * B * C})$$
+The diagram indicates \theta_2 can be found with $a = acos(\frac{B^2 + C^2 - A^2}{2 * B * C})$. Angle WC is a rotation in the Y-Axis and can be found with $$\a_WC = \atan2(-r_31, x_WC)$$
 
 $$WCa = acos(\frac{WC_y^2 + B^2 - WC_x^2}{2 * WC_y * B})$$
 
 $$\theta_2 = 90 - a - WCa$$
 
-From the diagram in step 15, it seems like \theta_3 can be found with this:
+From the diagram and clarification from the reviewer that the step 15 diagram is wrong for theta_3, it can be found with this:
 
 $$b = acos(\frac{A^2 + C^2 - B^2}{2 * A * C})$$
 
-$$\theta_3 = 90 - b$$
+$$\theta_3 = 90 - b + 0.036$$
 
-Section 15 indicates tgat 4, 5 and 6 can be found by taking the inverse of 0 through 3 and multiplying it with the end effector rotation matrix.
+It was clarified that line A sags by 0.036, so this was added to the angle. Based on the position of joint 3, if the arm moves down, the angle will be negative.
 
+According to section 15 of the project, theta 4, 5 and 6 can be obtained using the resulting matrix of $R3_6 - inv(R0_1*R1_2*R2_3*R3_4*R4_5*R5_6)*Rrpy$
+
+Lesson 18 points out there are several ways to end up with the same end point. In this case, the rotation of joint 4 can result in two alignments of joint 5 as shown below. 
+
+![theta_calc_4](./misc_images/Theta4_5_6.PNG)
+
+From here theta 4 is a rotation about the Z-axis that can be sovled with $\alpha = atan2(r_21, r_11)$, Theta 5 is a Y-Axis rotation with $\beta = atan2(-r_31, \sqrt{r_11*r_11 + r_21*r_21})$ and theta 6 (Z-Axis) with $\alpha = atan2(r_21, r_11)$.
+
+If the second option for joint 5 is used, the x and y parameters are swapped so 
+
+$$\theta_4 = atan2(r_11, r_21)$$
+$$\theta_5 = atan2(\sqrt{r_11*r_11 + r_21*r_21}, -r_31)$$
+$$\theta_6 = atan2(r_11, r_21)$$
+
+X is now pointing in the negative portion, so change the sign of the X values, with the exception of joint 6. 
+
+$$\theta_4 = atan2(r_11, -r_21)$$
+$$\theta_5 = atan2(\sqrt{r_11*r_11 + r_21*r_21}, r_31)$$
+$$\theta_6 = atan2(-r_11, r_21)$$
+
+Finally, the values are updated to match the actual rotation of the base and of the wrist center joints. 
+
+$$\theta_4 = atan2(r_33, -r_13)$$
+$$\theta_5 = atan2(\sqrt{r_13*r_13 + r_33*r_33}, r_23)$$
+$$\theta_6 = atan2(-r_22, r_21)$$
 
 ### Project Implementation
 
