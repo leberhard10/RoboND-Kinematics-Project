@@ -307,7 +307,7 @@ $$\theta_1 = \atan2(y_WC, x_WC)$$
 
 For Theta 2, the diagram from section 15 of the project was used to create the diagrams.
 
-![theta_calc_3](./misc_images/Theta2_3.PNG)
+![theta_calc_3](./misc_images/Theta2.png)
 
 $$A = 1.5(d_4 from DH Parameters)$$
 $$B = \sqrt{WC_y^2 + WC_x^2}$$
@@ -318,6 +318,8 @@ The diagram indicates \theta_2 can be found with $a = acos(\frac{B^2 + C^2 - A^2
 $$WCa = acos(\frac{WC_y^2 + B^2 - WC_x^2}{2 * WC_y * B})$$
 
 $$\theta_2 = 90 - a - WCa$$
+
+![theta_calc_3](./misc_images/Theta3.png)
 
 From the diagram and clarification from the reviewer that the step 15 diagram is wrong for theta_3, it can be found with this:
 
@@ -405,6 +407,8 @@ When clicking continue, the arm was still not obtaining 8 out of 10 cans. Debugg
 ![arm_pic](./misc_images/Run_1.PNG)
 
 8 out of 10 cans were picked up using the next button and the debugging statements. Some rotation matrix optimizations were removed in case they affected the results as well. Clicking continue instead of the Next button results in the software hanging up or the can is left on the shelf. The suspicion is that the FAQ time fix is not working on this virtual machine. The time is returned to 5 seconds, but the code still hangs on occassion when there are several lists of end effectors lists longer than 40. It is suspected that this is a limitation of the resources available to the virtual machine since it becomes more frequent until the VM is restarted. After re-starting the VM and a successful 8 out of 10 with the continue button, it was realized that this only happens when the computer is put into sleep overnight between runs.
+
+Optimization code comments were addressed and another run produced 9 out of 10 cans picked and placed in the bucket.
 
 ![arm_pic](./misc_images/Passing_Run.PNG)
 
